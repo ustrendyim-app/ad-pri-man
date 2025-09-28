@@ -2,6 +2,7 @@
   "name": "admin-price-sort-edit",
   "private": true,
   "scripts": {
+    "prebuild": "npm run setup",
     "build": "react-router build",
     "dev": "shopify app dev",
     "config:link": "shopify app config link",
