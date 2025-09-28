@@ -1,15 +1,19 @@
 {
+  "version": 2,
   "buildCommand": "npm run build",
-  "installCommand": "npm install",
+  "installCommand": "npm install && npx prisma generate",
   "functions": {
     "build/server/index.js": {
-      "runtime": "nodejs20.x"
+      "runtime": "nodejs18.x"
     }
   },
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/build/server/index.js"
+      "dest": "build/server/index.js"
     }
-  ]
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
