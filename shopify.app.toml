@@ -29,4 +29,4 @@ api_version = "2025-01"
 scopes = "write_products"
 
 [auth]
-redirect_urls = [ "https://ad-pri-man.vercel.app/api/auth" ]
+redirect_urls = [ "https://ad-pri-man.vercel.app/auth" ]
