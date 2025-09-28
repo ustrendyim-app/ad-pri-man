@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "build/server/index.js": {
-      "runtime": "@vercel/node@20"
-    }
-  },
   "routes": [
     {
       "src": "/(.*)",
