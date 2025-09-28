@@ -1,0 +1,64 @@
+{
+  "app": {
+    "title": "Admin Price Sort Edit",
+    "subtitle": "products loaded",
+    "by": "by Trendy Designs LLC",
+    "version": "Admin Price Sort Edit v2.0 | Built with ❤️ for Shopify Merchants"
+  },
+  "filters": {
+    "title": "Filters & Search",
+    "hideFilters": "Hide Filters",
+    "showFilters": "Show Filters",
+    "searchPlaceholder": "Search by name or vendor...",
+    "minPrice": "Min price",
+    "maxPrice": "Max price",
+    "itemsPerPage": "Items per page",
+    "clearFilters": "Clear Filters"
+  },
+  "sorting": {
+    "lowToHigh": "Price: Low to High",
+    "highToLow": "Price: High to Low"
+  },
+  "product": {
+    "variant": "variant",
+    "variants": "variants",
+    "showVariants": "Show variants",
+    "hideVariants": "Hide variants",
+    "active": "Active",
+    "inactive": "Inactive",
+    "edit": "Edit",
+    "was": "Was"
+  },
+  "pagination": {
+    "showing": "Showing",
+    "of": "of",
+    "filtered": "filtered products",
+    "for": "for",
+    "totalDataset": "Total dataset:",
+    "page": "Page",
+    "prev": "« Prev",
+    "next": "Next »",
+    "searching": "⏳ Searching..."
+  },
+  "messages": {
+    "noProducts": "No products found",
+    "adjustCriteria": "Try adjusting your search or filter criteria",
+    "priceUpdated": "Price updated to",
+    "productActivated": "Product activated successfully!",
+    "productDeactivated": "Product deactivated successfully!",
+    "priceUpdateSuccess": "Price updated successfully on Shopify!",
+    "statusUpdateSuccess": "Product status updated successfully on Shopify!",
+    "updateFailed": "Update failed",
+    "errorUpdatingPrice": "Error updating price. Please try again.",
+    "errorUpdatingStatus": "Error updating product status. Please try again.",
+    "productVariantNotFound": "Error: Product variant not found",
+    "clickToEdit": "Click to edit price",
+    "clickToEditVariant": "Click to edit variant price",
+    "clickToActivate": "Click to activate product",
+    "clickToDeactivate": "Click to deactivate product"
+  },
+  "footer": {
+    "poweredBy": "Powered by",
+    "company": "Trendy Designs LLC - Professional Shopify App Solutions"
+  }
+}

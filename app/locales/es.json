@@ -1,0 +1,64 @@
+{
+  "app": {
+    "title": "Editor de Ordenación de Precios Admin",
+    "subtitle": "productos cargados",
+    "by": "por Trendy Designs LLC",
+    "version": "Editor de Ordenación de Precios Admin v2.0 | Creado con ❤️ para comerciantes Shopify"
+  },
+  "filters": {
+    "title": "Filtros y Búsqueda",
+    "hideFilters": "Ocultar filtros",
+    "showFilters": "Mostrar filtros",
+    "searchPlaceholder": "Buscar por nombre o proveedor...",
+    "minPrice": "Precio mínimo",
+    "maxPrice": "Precio máximo",
+    "itemsPerPage": "Artículos por página",
+    "clearFilters": "Limpiar filtros"
+  },
+  "sorting": {
+    "lowToHigh": "Precio: De menor a mayor",
+    "highToLow": "Precio: De mayor a menor"
+  },
+  "product": {
+    "variant": "variante",
+    "variants": "variantes",
+    "showVariants": "Mostrar variantes",
+    "hideVariants": "Ocultar variantes",
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "edit": "Editar",
+    "was": "Era"
+  },
+  "pagination": {
+    "showing": "Mostrando",
+    "of": "de",
+    "filtered": "productos filtrados",
+    "for": "para",
+    "totalDataset": "Dataset total:",
+    "page": "Página",
+    "prev": "« Anterior",
+    "next": "Siguiente »",
+    "searching": "⏳ Buscando..."
+  },
+  "messages": {
+    "noProducts": "No se encontraron productos",
+    "adjustCriteria": "Intenta ajustar tus criterios de búsqueda o filtro",
+    "priceUpdated": "Precio actualizado a",
+    "productActivated": "¡Producto activado exitosamente!",
+    "productDeactivated": "¡Producto desactivado exitosamente!",
+    "priceUpdateSuccess": "¡Precio actualizado exitosamente en Shopify!",
+    "statusUpdateSuccess": "¡Estado del producto actualizado exitosamente en Shopify!",
+    "updateFailed": "Actualización fallida",
+    "errorUpdatingPrice": "Error al actualizar el precio. Inténtalo de nuevo.",
+    "errorUpdatingStatus": "Error al actualizar el estado del producto. Inténtalo de nuevo.",
+    "productVariantNotFound": "Error: Variante del producto no encontrada",
+    "clickToEdit": "Haz clic para editar el precio",
+    "clickToEditVariant": "Haz clic para editar el precio de la variante",
+    "clickToActivate": "Haz clic para activar el producto",
+    "clickToDeactivate": "Haz clic para desactivar el producto"
+  },
+  "footer": {
+    "poweredBy": "Powered by",
+    "company": "Trendy Designs LLC - Soluciones profesionales de aplicaciones Shopify"
+  }
+}
