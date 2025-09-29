@@ -4,7 +4,7 @@ import type {
   HeadersFunction,
   LoaderFunctionArgs,
 } from "react-router";
-import { useFetcher, useLoaderData, useNavigate } from "react-router";
+import { useFetcher, useLoaderData } from "react-router";
 import { useAppBridge } from "@shopify/app-bridge-react";
 // Using simple HTML/CSS for better compatibility
 import { authenticate } from "../shopify.server";
@@ -566,7 +566,6 @@ export default function PriceSortingApp() {
   const [language, setLanguage] = useState<keyof typeof translations>('en');
   const fetcher = useFetcher();
   const shopify = useAppBridge();
-  const routerNavigate = useNavigate();
   
   // Use server-side pagination values
   const itemsPerPage = currentItemsPerPage === 'all' ? 'all' : parseInt(currentItemsPerPage);
@@ -615,7 +614,7 @@ export default function PriceSortingApp() {
   // Sorting will be handled via URL navigation to fetch sorted data from server
   const sortedAndFilteredProducts = products;
   
-  // Navigation helper to update URL with new parameters (client-side, no full page reload)
+  // Navigation helper to update URL with new parameters (force server loader)
   const navigate = (params: Record<string, string | number>) => {
     const url = new URL(window.location.href);
     Object.entries(params).forEach(([key, value]) => {
@@ -625,7 +624,7 @@ export default function PriceSortingApp() {
         url.searchParams.set(key, String(value));
       }
     });
-    routerNavigate(`${url.pathname}?${url.searchParams.toString()}`);
+    window.location.href = `${url.pathname}?${url.searchParams.toString()}`;
   };
 
   const handleSortChange = (order: 'asc' | 'desc') => {
