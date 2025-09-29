@@ -1,6 +1,20 @@
-import type { ActionFunctionArgs } from "react-router";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import crypto from "node:crypto";
 import db from "../db.server";
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  return new Response(
+    JSON.stringify({
+      endpoint: "shop/redact",
+      status: "ready",
+      method: "POST only",
+    }),
+    {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+};
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   if (request.method !== "POST") {
