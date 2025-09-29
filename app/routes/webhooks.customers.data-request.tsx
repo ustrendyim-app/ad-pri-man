@@ -1,5 +1,5 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
-import { authenticate } from "../shopify.server";
+import { verifyShopifyWebhook } from "../utils/verifyShopifyWebhook.server";
 
 // Handle GET requests for testing
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -17,36 +17,16 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 // Handle POST requests (actual webhooks)
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {
-    const { shop, session, topic, payload } = await authenticate.webhook(request);
-    
+    const secret = process.env.SHOPIFY_API_SECRET || "";
+    const result = await verifyShopifyWebhook(request, secret);
+    if (!result.ok) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
+    const { shop, topic, payload } = result;
     console.log(`Received ${topic} webhook for shop: ${shop}`);
-    
-    // Parse the webhook payload (payload is already parsed by authenticate.webhook)
-    const data = payload;
-    
-    console.log("GDPR Data Request received:", {
-      shop_id: data.shop_id,
-      shop_domain: data.shop_domain,
-      customer: data.customer,
-      data_request: data.data_request
-    });
 
     // For this app, we don't store personal customer data
-    // We only store shop data and product information
-    // So we don't have customer-specific data to export
-    
-    const responseData = {
-      customer_id: data.customer?.id,
-      shop_domain: data.shop_domain,
-      message: "Admin Price Sort Edit does not store personal customer data. Only product pricing information is processed.",
-      data_exported: {
-        personal_data: "None stored",
-        pricing_interactions: "No customer-specific data retained"
-      }
-    };
-
-    console.log("GDPR Data Request Response:", responseData);
-
     return new Response(JSON.stringify({ status: "success", message: "Data request processed" }), { 
       status: 200,
       headers: { "Content-Type": "application/json" }
@@ -54,11 +34,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     
   } catch (error: any) {
     console.error("Error processing GDPR data request:", error);
-    
-    if (error instanceof Response) {
-      return error; // Propagate 401 from HMAC verification
-    }
-    
     return new Response(JSON.stringify({ error: "Internal Server Error" }), { 
       status: 500,
       headers: { "Content-Type": "application/json" }
