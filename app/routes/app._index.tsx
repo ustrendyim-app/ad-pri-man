@@ -4,7 +4,7 @@ import type {
   HeadersFunction,
   LoaderFunctionArgs,
 } from "react-router";
-import { useFetcher, useLoaderData } from "react-router";
+import { useFetcher, useLoaderData, useNavigate } from "react-router";
 import { useAppBridge } from "@shopify/app-bridge-react";
 // Using simple HTML/CSS for better compatibility
 import { authenticate } from "../shopify.server";
@@ -294,32 +294,69 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     fetchCount++;
   }
   
-  // Apply sorting to all fetched products
+  // Apply filtering before sorting/pagination
+  const normalizedSearch = (searchTerm || '').trim().toLowerCase();
+  const hasSearch = normalizedSearch.length > 0;
+  const hasType = !!productType;
+  const selectedCollectionId = collection || '';
+  const hasCollection = selectedCollectionId !== '';
+  const min = minPrice ? parseFloat(minPrice) : Number.NEGATIVE_INFINITY;
+  const max = maxPrice ? parseFloat(maxPrice) : Number.POSITIVE_INFINITY;
+
+  let filteredProducts = allProducts.filter((p: any) => {
+    // Search by title, vendor, or handle
+    const matchesSearch = !hasSearch
+      ? true
+      : (p.title?.toLowerCase().includes(normalizedSearch) ||
+         p.vendor?.toLowerCase().includes(normalizedSearch) ||
+         p.handle?.toLowerCase().includes(normalizedSearch));
+
+    // Product type equality
+    const matchesType = !hasType ? true : (p.productType === productType);
+
+    // Collection match by ID
+    const matchesCollection = !hasCollection
+      ? true
+      : Array.isArray(p.collections) && p.collections.some((c: any) => c.id === selectedCollectionId);
+
+    // Price within range (check all variants if present)
+    const prices: number[] = Array.isArray(p.variants) && p.variants.length > 0
+      ? p.variants.map((v: any) => parseFloat(v.price)).filter((n: number) => !Number.isNaN(n))
+      : [parseFloat(p.price)];
+    const productMin = Math.min(...prices);
+    const productMax = Math.max(...prices);
+    const matchesPrice = productMax >= min && productMin <= max; // any variant overlaps range
+
+    return matchesSearch && matchesType && matchesCollection && matchesPrice;
+  });
+
+  // Sort filtered products by price
   if (sortOrder === 'desc') {
-    allProducts.sort((a, b) => {
+    filteredProducts.sort((a, b) => {
       const priceA = parseFloat(a.price);
       const priceB = parseFloat(b.price);
       return priceB - priceA; // desc
     });
   } else {
-    allProducts.sort((a, b) => {
+    filteredProducts.sort((a, b) => {
       const priceA = parseFloat(a.price);
       const priceB = parseFloat(b.price);
       return priceA - priceB; // asc
     });
   }
   
-  // Apply pagination to sorted products
-  totalCount = allProducts.length;
+  // Apply pagination to sorted & filtered products
+  totalCount = filteredProducts.length;
   if (isLoadingAll) {
-    // Return all products
+    // Return all filtered products
     hasNextPage = false;
     hasPrevPage = false;
+    allProducts = filteredProducts;
   } else {
     // Apply pagination
     const startIndex = (page - 1) * itemsPerPageNum;
     const endIndex = startIndex + itemsPerPageNum;
-    const paginatedProducts = allProducts.slice(startIndex, endIndex);
+    const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
     
     allProducts = paginatedProducts;
     hasNextPage = endIndex < totalCount;
@@ -529,6 +566,7 @@ export default function PriceSortingApp() {
   const [language, setLanguage] = useState<keyof typeof translations>('en');
   const fetcher = useFetcher();
   const shopify = useAppBridge();
+  const routerNavigate = useNavigate();
   
   // Use server-side pagination values
   const itemsPerPage = currentItemsPerPage === 'all' ? 'all' : parseInt(currentItemsPerPage);
@@ -577,7 +615,7 @@ export default function PriceSortingApp() {
   // Sorting will be handled via URL navigation to fetch sorted data from server
   const sortedAndFilteredProducts = products;
   
-  // Navigation helper to update URL with new parameters
+  // Navigation helper to update URL with new parameters (client-side, no full page reload)
   const navigate = (params: Record<string, string | number>) => {
     const url = new URL(window.location.href);
     Object.entries(params).forEach(([key, value]) => {
@@ -587,7 +625,7 @@ export default function PriceSortingApp() {
         url.searchParams.set(key, String(value));
       }
     });
-    window.location.href = url.toString();
+    routerNavigate(`${url.pathname}?${url.searchParams.toString()}`);
   };
 
   const handleSortChange = (order: 'asc' | 'desc') => {
