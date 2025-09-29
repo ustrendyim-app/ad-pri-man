@@ -21,9 +21,9 @@ export default function App() {
   return (
     <div className={styles.index}>
       <div className={styles.content}>
-        <h1 className={styles.heading}>A short heading about [your app]</h1>
+        <h1 className={styles.heading}>Admin Price Sort Edit</h1>
         <p className={styles.text}>
-          A tagline about [your app] that describes your value proposition.
+          Advanced product price sorting and editing with real-time updates and server-side pagination.
         </p>
         {showForm && (
           <Form className={styles.form} method="post" action="/auth/login">
@@ -39,16 +39,13 @@ export default function App() {
         )}
         <ul className={styles.list}>
           <li>
-            <strong>Product feature</strong>. Some detail about your feature and
-            its benefit to your customer.
+            <strong>Real-time Price Editing</strong>. Click-to-edit prices for products and variants with instant updates.
           </li>
           <li>
-            <strong>Product feature</strong>. Some detail about your feature and
-            its benefit to your customer.
+            <strong>Advanced Pagination</strong>. Server-side pagination with options for 10, 20, 100, 1000, 2000, or All products.
           </li>
           <li>
-            <strong>Product feature</strong>. Some detail about your feature and
-            its benefit to your customer.
+            <strong>Multi-language Support</strong>. Professional interface with support for English, German, French, Italian, and Spanish.
           </li>
         </ul>
       </div>
