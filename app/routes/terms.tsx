@@ -5,11 +5,14 @@ export default function Terms() {
       margin: '0 auto', 
       padding: '40px 20px',
       fontFamily: 'system-ui, -apple-system, sans-serif',
-      lineHeight: '1.6'
+      lineHeight: '1.6',
+      backgroundColor: '#ffffff',
+      color: '#000000',
+      minHeight: '100vh'
     }}>
-      <h1 style={{ color: '#1a1a1a', marginBottom: '30px' }}>Terms of Service</h1>
+      <h1 style={{ color: '#000000', marginBottom: '30px', fontSize: '32px', fontWeight: 'bold' }}>Terms of Service</h1>
       
-      <div style={{ color: '#4a5568', fontSize: '14px', marginBottom: '20px' }}>
+      <div style={{ color: '#666666', fontSize: '14px', marginBottom: '20px' }}>
         Last updated: {new Date().toLocaleDateString('en-US', { 
           year: 'numeric', 
           month: 'long', 
@@ -18,7 +21,7 @@ export default function Terms() {
       </div>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>Acceptance of Terms</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>Acceptance of Terms</h2>
         <p style={{ marginBottom: '16px' }}>
           By installing and using Admin Price Sort Edit ("the App"), you agree to be bound by these Terms of Service. 
           If you do not agree to these terms, please do not use the App.
@@ -26,7 +29,7 @@ export default function Terms() {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>Description of Service</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>Description of Service</h2>
         <p style={{ marginBottom: '16px' }}>
           Admin Price Sort Edit is a Shopify application that allows store owners to:
         </p>
@@ -40,7 +43,7 @@ export default function Terms() {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>User Responsibilities</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>User Responsibilities</h2>
         <p style={{ marginBottom: '16px' }}>You agree to:</p>
         <ul style={{ marginLeft: '20px', marginBottom: '16px' }}>
           <li>Use the App in compliance with all applicable laws and regulations</li>
@@ -52,7 +55,7 @@ export default function Terms() {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>Data and Privacy</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>Data and Privacy</h2>
         <p style={{ marginBottom: '16px' }}>
           The App accesses and processes your store's product data to provide its services. We are committed to 
           protecting your privacy and handle your data in accordance with our Privacy Policy. You retain ownership 
@@ -61,7 +64,7 @@ export default function Terms() {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>Pricing and Payment</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>Pricing and Payment</h2>
         <p style={{ marginBottom: '16px' }}>
           The App offers multiple pricing tiers:
         </p>
@@ -76,7 +79,7 @@ export default function Terms() {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>Service Availability</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>Service Availability</h2>
         <p style={{ marginBottom: '16px' }}>
           We strive to maintain 99.9% uptime, but cannot guarantee uninterrupted service. We reserve the right to 
           perform maintenance that may temporarily affect service availability. We will provide advance notice when possible.
@@ -84,7 +87,7 @@ export default function Terms() {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>Limitation of Liability</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>Limitation of Liability</h2>
         <p style={{ marginBottom: '16px' }}>
           The App is provided "as is" without warranties of any kind. We are not liable for any damages arising from:
         </p>
@@ -100,7 +103,7 @@ export default function Terms() {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>Termination</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>Termination</h2>
         <p style={{ marginBottom: '16px' }}>
           You may terminate your use of the App at any time by uninstalling it from your Shopify store. 
           We reserve the right to terminate or suspend access to the App for violations of these terms.
@@ -108,7 +111,7 @@ export default function Terms() {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>Support</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>Support</h2>
         <p style={{ marginBottom: '16px' }}>
           For technical support or questions about the App, please contact us at:
         </p>
@@ -121,7 +124,7 @@ export default function Terms() {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>Changes to Terms</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>Changes to Terms</h2>
         <p style={{ marginBottom: '16px' }}>
           We reserve the right to modify these Terms of Service at any time. Changes will be effective immediately 
           upon posting. Your continued use of the App after changes constitutes acceptance of the new terms.
@@ -129,7 +132,7 @@ export default function Terms() {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>Governing Law</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>Governing Law</h2>
         <p style={{ marginBottom: '16px' }}>
           These Terms of Service are governed by and construed in accordance with the laws of [Your Jurisdiction]. 
           Any disputes shall be resolved through binding arbitration.
@@ -137,7 +140,7 @@ export default function Terms() {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>Contact Information</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>Contact Information</h2>
         <p style={{ marginBottom: '16px' }}>
           For questions about these Terms of Service, please contact us at:
         </p>
@@ -150,10 +153,10 @@ export default function Terms() {
       </section>
 
       <div style={{ 
-        borderTop: '1px solid #e2e8f0', 
+        borderTop: '1px solid #cccccc',
         paddingTop: '20px', 
         fontSize: '14px', 
-        color: '#718096',
+        color: '#666666',
         textAlign: 'center'
       }}>
         © {new Date().getFullYear()} Admin Price Sort Edit. All rights reserved.

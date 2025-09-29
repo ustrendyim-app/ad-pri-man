@@ -5,11 +5,14 @@ export default function Privacy() {
       margin: '0 auto', 
       padding: '40px 20px',
       fontFamily: 'system-ui, -apple-system, sans-serif',
-      lineHeight: '1.6'
+      lineHeight: '1.6',
+      backgroundColor: '#ffffff',
+      color: '#000000',
+      minHeight: '100vh'
     }}>
-      <h1 style={{ color: '#1a1a1a', marginBottom: '30px' }}>Privacy Policy</h1>
+      <h1 style={{ color: '#000000', marginBottom: '30px', fontSize: '32px', fontWeight: 'bold' }}>Privacy Policy</h1>
       
-      <div style={{ color: '#4a5568', fontSize: '14px', marginBottom: '20px' }}>
+      <div style={{ color: '#666666', fontSize: '14px', marginBottom: '20px' }}>
         Last updated: {new Date().toLocaleDateString('en-US', { 
           year: 'numeric', 
           month: 'long', 
@@ -18,7 +21,7 @@ export default function Privacy() {
       </div>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>Information We Collect</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>Information We Collect</h2>
         <p style={{ marginBottom: '16px' }}>
           Admin Price Sort Edit collects only the minimum information necessary to provide our services:
         </p>
@@ -30,7 +33,7 @@ export default function Privacy() {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>How We Use Your Information</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>How We Use Your Information</h2>
         <p style={{ marginBottom: '16px' }}>We use collected information to:</p>
         <ul style={{ marginLeft: '20px', marginBottom: '16px' }}>
           <li>Provide and maintain our price editing services</li>
@@ -41,7 +44,7 @@ export default function Privacy() {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>Data Security</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>Data Security</h2>
         <p style={{ marginBottom: '16px' }}>
           We implement appropriate security measures to protect your information against unauthorized access, 
           alteration, disclosure, or destruction. All data transmission is encrypted using industry-standard protocols.
@@ -49,7 +52,7 @@ export default function Privacy() {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>Data Retention</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>Data Retention</h2>
         <p style={{ marginBottom: '16px' }}>
           We retain your data only as long as necessary to provide our services. When you uninstall the app, 
           all associated data is automatically deleted from our systems.
@@ -57,7 +60,7 @@ export default function Privacy() {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>Third-Party Services</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>Third-Party Services</h2>
         <p style={{ marginBottom: '16px' }}>
           Our app integrates with Shopify's API to provide pricing functionality. We do not share your data 
           with any other third-party services without your explicit consent.
@@ -65,7 +68,7 @@ export default function Privacy() {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>Your Rights</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>Your Rights</h2>
         <p style={{ marginBottom: '16px' }}>You have the right to:</p>
         <ul style={{ marginLeft: '20px', marginBottom: '16px' }}>
           <li>Access your personal data</li>
@@ -76,7 +79,7 @@ export default function Privacy() {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>Contact Us</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>Contact Us</h2>
         <p style={{ marginBottom: '16px' }}>
           If you have any questions about this Privacy Policy, please contact us at:
         </p>
@@ -89,7 +92,7 @@ export default function Privacy() {
       </section>
 
       <section style={{ marginBottom: '30px' }}>
-        <h2 style={{ color: '#2d3748', fontSize: '24px', marginBottom: '16px' }}>Changes to This Policy</h2>
+        <h2 style={{ color: '#000000', fontSize: '24px', marginBottom: '16px', fontWeight: 'bold' }}>Changes to This Policy</h2>
         <p style={{ marginBottom: '16px' }}>
           We may update this Privacy Policy from time to time. We will notify you of any changes by posting 
           the new Privacy Policy on this page and updating the "Last updated" date.
@@ -97,10 +100,10 @@ export default function Privacy() {
       </section>
 
       <div style={{ 
-        borderTop: '1px solid #e2e8f0', 
+        borderTop: '1px solid #cccccc', 
         paddingTop: '20px', 
         fontSize: '14px', 
-        color: '#718096',
+        color: '#666666',
         textAlign: 'center'
       }}>
         © {new Date().getFullYear()} Admin Price Sort Edit. All rights reserved.
