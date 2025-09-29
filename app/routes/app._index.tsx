@@ -541,16 +541,24 @@ export default function PriceSortingApp() {
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   
-  // Update sortOrder from URL on mount
+  // Sync initial UI state from URL on mount (sort order, search, filters)
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
       const urlSortOrder = urlParams.get('sortOrder');
-      if (urlSortOrder === 'desc') {
-        setSortOrder('desc');
-      } else {
-        setSortOrder('asc');
-      }
+      setSortOrder(urlSortOrder === 'desc' ? 'desc' : 'asc');
+
+      const urlSearch = urlParams.get('search') || '';
+      setSearchTerm(urlSearch);
+      setDebouncedSearchTerm(urlSearch);
+
+      setProductTypeFilter(urlParams.get('productType') || '');
+      setCollectionFilter(urlParams.get('collection') || '');
+
+      setPriceFilter({
+        min: urlParams.get('minPrice') || '',
+        max: urlParams.get('maxPrice') || '',
+      });
     }
   }, []);
   const [searchTerm, setSearchTerm] = useState('');
