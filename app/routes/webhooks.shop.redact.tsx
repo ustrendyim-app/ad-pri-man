@@ -33,7 +33,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     .update(body, "utf8")
     .digest("base64");
 
-  if (!crypto.timingSafeEqual(Buffer.from(hash), Buffer.from(hmacHeader))) {
+  const a = Buffer.from(hash, "utf8");
+  const b = Buffer.from(hmacHeader, "utf8");
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) {
     return new Response(null, { status: 401 });
   }
 
