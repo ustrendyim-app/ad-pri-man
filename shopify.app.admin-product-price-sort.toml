@@ -16,25 +16,18 @@ api_version = "2025-01"
   topics = [ "app/scopes_update" ]
   uri = "/webhooks/app/scopes_update"
 
-  # GDPR mandatory compliance webhooks
-  [[webhooks.subscriptions]]
-  topics = ["customers/data_request"]
-  uri = "/webhooks/customers/data-request"
-
-  [[webhooks.subscriptions]]
-  topics = ["customers/redact"]
-  uri = "/webhooks/customers/redact"
-
-  [[webhooks.subscriptions]]
-  topics = ["shop/redact"]
-  uri = "/webhooks/shop/redact"
-
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
 scopes = "write_products"
 
 [auth]
 redirect_urls = [ "https://ad-pri-man.vercel.app/auth" ]
+
+# Mandatory privacy compliance webhook endpoints
+[privacy_compliance]
+customer_data_request_url = "/webhooks/customers/data-request"
+customer_redact_url = "/webhooks/customers/redact"
+shop_redact_url = "/webhooks/shop/redact"
 
 [build]
 automatically_update_urls_on_dev = true
