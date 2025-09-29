@@ -27,14 +27,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return new Response(null, { status: 401 });
   }
 
-  const body = await request.text();
-  const hash = crypto
+  const raw = await request.arrayBuffer();
+  const body = Buffer.from(raw);
+  const computed = crypto
     .createHmac("sha256", secret)
-    .update(body, "utf8")
+    .update(body)
     .digest("base64");
 
-  const a = Buffer.from(hash, "utf8");
-  const b = Buffer.from(hmacHeader, "utf8");
+  const a = Buffer.from(computed, "base64");
+  const b = Buffer.from(hmacHeader, "base64");
   if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) {
     return new Response(null, { status: 401 });
   }
