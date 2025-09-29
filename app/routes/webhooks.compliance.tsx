@@ -52,12 +52,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       }
     }
   } catch (error: any) {
-    // If HMAC invalid, authenticate.webhook will throw; return 401 to satisfy check
-    if (error?.message?.toLowerCase?.().includes("webhook")) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401,
-        headers: { "Content-Type": "application/json" },
-      });
+    // The Shopify library throws a Response (401) when HMAC verification fails.
+    if (error instanceof Response) {
+      return error; // propagate 401 Unauthorized to satisfy the automated check
     }
     console.error("Compliance webhook error", error);
     return new Response(JSON.stringify({ error: "Internal Server Error" }), {

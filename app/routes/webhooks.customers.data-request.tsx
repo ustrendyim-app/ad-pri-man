@@ -52,15 +52,11 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       headers: { "Content-Type": "application/json" }
     });
     
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error processing GDPR data request:", error);
     
-    // Check if it's a webhook verification error
-    if (error.message && error.message.includes("webhook")) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), { 
-        status: 401,
-        headers: { "Content-Type": "application/json" }
-      });
+    if (error instanceof Response) {
+      return error; // Propagate 401 from HMAC verification
     }
     
     return new Response(JSON.stringify({ error: "Internal Server Error" }), { 
