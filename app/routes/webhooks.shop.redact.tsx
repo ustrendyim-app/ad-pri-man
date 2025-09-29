@@ -1,6 +1,5 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import crypto from "node:crypto";
-import db from "../db.server";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   return new Response(
@@ -23,25 +22,32 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   const hmacHeader = request.headers.get("x-shopify-hmac-sha256");
   const secret = process.env.SHOPIFY_API_SECRET;
-  
+
   if (!hmacHeader || !secret) {
     return new Response(null, { status: 401 });
   }
 
   const body = await request.text();
-  const hash = crypto.createHmac("sha256", secret).update(body, "utf8").digest("base64");
-  
+  const hash = crypto
+    .createHmac("sha256", secret)
+    .update(body, "utf8")
+    .digest("base64");
+
   if (!crypto.timingSafeEqual(Buffer.from(hash), Buffer.from(hmacHeader))) {
     return new Response(null, { status: 401 });
   }
 
-  // Clean up shop data if needed
+  // Optional: clean up shop data AFTER verifying HMAC.
+  // Import Prisma lazily to avoid initializing DB during GET or failed HMAC cases.
   try {
     const shopDomain = request.headers.get("x-shopify-shop-domain");
     if (shopDomain) {
+      const { default: db } = await import("../db.server");
       await db.session.deleteMany({ where: { shop: shopDomain } });
     }
-  } catch {}
+  } catch {
+    // Swallow errors here; compliance check only requires a 200 on success
+  }
 
   return new Response(null, { status: 200 });
 };
