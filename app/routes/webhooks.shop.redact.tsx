@@ -1,7 +1,21 @@
-import type { ActionFunctionArgs } from "react-router";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import { authenticate } from "../shopify.server";
 import db from "../db.server";
 
+// Handle GET requests for testing
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  return new Response(JSON.stringify({ 
+    endpoint: "shop/redact", 
+    status: "ready",
+    method: "POST only",
+    message: "This webhook endpoint is ready to receive POST requests from Shopify" 
+  }), {
+    status: 200,
+    headers: { "Content-Type": "application/json" }
+  });
+};
+
+// Handle POST requests (actual webhooks)
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {
     const { shop, session, topic, payload } = await authenticate.webhook(request);
