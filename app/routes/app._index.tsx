@@ -381,82 +381,65 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       const numericVariantId = variantId.split('/').pop();
       console.log('Numeric variant ID:', numericVariantId);
       
-      // Use REST API PUT method for variant update
-      const shopDomain = session?.shop || 'trendyapps-2.myshopify.com';
-      console.log('Shop domain:', shopDomain);
-      console.log('Access token available:', !!session?.accessToken);
-      console.log('Session info:', { shop: session?.shop, isOnline: session?.isOnline });
-      
-      if (!session?.accessToken) {
-        console.error('No access token available');
-        return { success: false, error: 'No access token available' };
-      }
-      
-      const response = await fetch(`https://${shopDomain}/admin/api/2025-01/variants/${numericVariantId}.json`, {
-        method: 'PUT',
-        headers: {
-          'X-Shopify-Access-Token': session.accessToken,
-          'Content-Type': 'application/json',
+      // Update variant price via GraphQL (REST /variants is deprecated)
+      const gqlResp = await admin.graphql(
+        `#graphql
+          mutation variantPriceUpdate($id: ID!, $price: Money!) {
+            productVariantUpdate(input: { id: $id, price: $price }) {
+              productVariant { id price }
+              userErrors { field message }
+            }
+          }`,
+        {
+          variables: {
+            id: targetVariantId,
+            price: parseFloat(newPrice).toFixed(2),
+          },
         },
-        body: JSON.stringify({
-          variant: {
-            id: parseInt(numericVariantId!),
-            price: newPrice
-          }
-        })
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.text();
-        console.error('Price update failed:', errorData);
-        return { 
-          success: false, 
-          error: `Failed to update price: ${response.status} ${response.statusText}` 
+      );
+
+      const gqlJson = await gqlResp.json();
+      const vUpdate = gqlJson?.data?.productVariantUpdate;
+      if (!vUpdate || (vUpdate.userErrors && vUpdate.userErrors.length)) {
+        console.error('GraphQL variantPriceUpdate errors:', vUpdate?.userErrors);
+        return {
+          success: false,
+          error: vUpdate?.userErrors?.map((e: any) => e.message).join(', ') || 'Variant price update failed',
         };
       }
-      
-      const responseData = await response.json();
-      console.log('Price update successful:', responseData);
-      
+
       return { success: true, type: 'price', newPrice };
       
     } else if (actionType === 'updateStatus') {
       const newStatus = formData.get('newStatus') as string;
       
-      // Extract numeric ID from Shopify GID
-      const numericProductId = productId.split('/').pop();
-      
-      // Use REST API PUT method for product update
-      const shopDomain = session?.shop || 'trendyapps-2.myshopify.com';
-      
-      if (!session?.accessToken) {
-        console.error('No access token available for status update');
-        return { success: false, error: 'No access token available' };
-      }
-      
-      const response = await fetch(`https://${shopDomain}/admin/api/2025-01/products/${numericProductId}.json`, {
-        method: 'PUT',
-        headers: {
-          'X-Shopify-Access-Token': session.accessToken,
-          'Content-Type': 'application/json',
+      // Update product status via GraphQL (REST /products is deprecated)
+      const prodResp = await admin.graphql(
+        `#graphql
+          mutation productStatusUpdate($id: ID!, $status: ProductStatus!) {
+            productUpdate(input: { id: $id, status: $status }) {
+              product { id status }
+              userErrors { field message }
+            }
+          }`,
+        {
+          variables: {
+            id: productId,
+            status: newStatus,
+          },
         },
-        body: JSON.stringify({
-          product: {
-            id: parseInt(numericProductId!),
-            status: newStatus.toLowerCase()
-          }
-        })
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.text();
-        console.error('Status update failed:', errorData);
-        return { 
-          success: false, 
-          error: `Failed to update status: ${response.status} ${response.statusText}` 
+      );
+
+      const prodJson = await prodResp.json();
+      const pUpdate = prodJson?.data?.productUpdate;
+      if (!pUpdate || (pUpdate.userErrors && pUpdate.userErrors.length)) {
+        console.error('GraphQL productStatusUpdate errors:', pUpdate?.userErrors);
+        return {
+          success: false,
+          error: pUpdate?.userErrors?.map((e: any) => e.message).join(', ') || 'Product status update failed',
         };
       }
-      
+
       return { success: true, type: 'status', newStatus };
     }
     
