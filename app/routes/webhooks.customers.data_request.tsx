@@ -1,1 +1,1 @@
-export { loader, action } from "./webhooks.customers.data-request";
+export { action } from "./webhooks.customers.data-request";
