@@ -3,13 +3,12 @@ import { authenticate } from "../shopify.server";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {
-    const { shop, session, topic } = await authenticate.webhook(request);
+    const { shop, session, topic, payload } = await authenticate.webhook(request);
     
     console.log(`Received ${topic} webhook for shop: ${shop}`);
     
-    // Parse the webhook payload
-    const payload = await request.text();
-    const data = JSON.parse(payload);
+    // Parse the webhook payload (payload is already parsed by authenticate.webhook)
+    const data = payload;
     
     console.log("GDPR Data Request received:", {
       shop_id: data.shop_id,
@@ -34,10 +33,25 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
     console.log("GDPR Data Request Response:", responseData);
 
-    return new Response("OK", { status: 200 });
+    return new Response(JSON.stringify({ status: "success", message: "Data request processed" }), { 
+      status: 200,
+      headers: { "Content-Type": "application/json" }
+    });
     
   } catch (error) {
     console.error("Error processing GDPR data request:", error);
-    return new Response("Error", { status: 500 });
+    
+    // Check if it's a webhook verification error
+    if (error.message && error.message.includes("webhook")) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), { 
+        status: 401,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+    
+    return new Response(JSON.stringify({ error: "Internal Server Error" }), { 
+      status: 500,
+      headers: { "Content-Type": "application/json" }
+    });
   }
 };

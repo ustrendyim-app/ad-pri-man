@@ -4,13 +4,12 @@ import db from "../db.server";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {
-    const { shop, session, topic } = await authenticate.webhook(request);
+    const { shop, session, topic, payload } = await authenticate.webhook(request);
     
     console.log(`Received ${topic} webhook for shop: ${shop}`);
     
-    // Parse the webhook payload
-    const payload = await request.text();
-    const data = JSON.parse(payload);
+    // Parse the webhook payload (payload is already parsed by authenticate.webhook)
+    const data = payload;
     
     console.log("GDPR Shop Redact received:", {
       shop_id: data.shop_id,
@@ -33,7 +32,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         status: "completed"
       });
 
-      return new Response("OK", { status: 200 });
+      return new Response(JSON.stringify({ status: "success", message: "Shop redact processed" }), { 
+        status: 200,
+        headers: { "Content-Type": "application/json" }
+      });
       
     } catch (dbError) {
       console.error("Database error during shop redact:", dbError);
@@ -45,11 +47,26 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         status: "completed_with_warnings"
       });
       
-      return new Response("OK", { status: 200 });
+      return new Response(JSON.stringify({ status: "success", message: "Shop redact completed with warnings" }), { 
+        status: 200,
+        headers: { "Content-Type": "application/json" }
+      });
     }
     
   } catch (error) {
     console.error("Error processing GDPR shop redact:", error);
-    return new Response("Error", { status: 500 });
+    
+    // Check if it's a webhook verification error
+    if (error.message && error.message.includes("webhook")) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), { 
+        status: 401,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+    
+    return new Response(JSON.stringify({ error: "Internal Server Error" }), { 
+      status: 500,
+      headers: { "Content-Type": "application/json" }
+    });
   }
 };
