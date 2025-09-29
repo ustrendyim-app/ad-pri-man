@@ -25,8 +25,16 @@ api_version = "2025-01"
   uri = "/webhooks/app/scopes_update"
 
   [[webhooks.subscriptions]]
-  compliance_topics = [ "customers/data_request", "customers/redact", "shop/redact" ]
-  uri = "https://ad-pri-man.vercel.app/webhooks/compliance"
+  topics = [ "customers/data_request" ]
+  uri = "https://ad-pri-man.vercel.app/webhooks/customers/data-request"
+
+  [[webhooks.subscriptions]]
+  topics = [ "customers/redact" ]
+  uri = "https://ad-pri-man.vercel.app/webhooks/customers/redact"
+
+  [[webhooks.subscriptions]]
+  topics = [ "shop/redact" ]
+  uri = "https://ad-pri-man.vercel.app/webhooks/shop/redact"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
