@@ -414,9 +414,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       
       console.log('Updating price:', { newPrice, variantId });
       
-      // Extract numeric ID from Shopify GID
-      const numericVariantId = variantId.split('/').pop();
-      console.log('Numeric variant ID:', numericVariantId);
+      console.log('Updating variant price with GraphQL:', { variantId, newPrice });
       
       // Update variant price via GraphQL (REST /variants is deprecated)
       const gqlResp = await admin.graphql(
@@ -429,7 +427,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           }`,
         {
           variables: {
-            id: targetVariantId,
+            id: variantId,
             price: parseFloat(newPrice).toFixed(2),
           },
         },

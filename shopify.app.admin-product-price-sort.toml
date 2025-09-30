@@ -23,11 +23,5 @@ scopes = "write_products"
 [auth]
 redirect_urls = [ "https://ad-pri-man.vercel.app/auth" ]
 
-# Mandatory privacy compliance webhook endpoints
-[privacy_compliance]
-customer_data_request_url = "/webhooks/customers/data-request"
-customer_redact_url = "/webhooks/customers/redact"
-shop_redact_url = "/webhooks/shop/redact"
-
-[build]
+[access_scopes]
 automatically_update_urls_on_dev = true
