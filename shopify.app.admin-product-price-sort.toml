@@ -23,5 +23,5 @@ scopes = "write_products"
 [auth]
 redirect_urls = [ "https://ad-pri-man.vercel.app/auth" ]
 
-[access_scopes]
+[build]
 automatically_update_urls_on_dev = true
