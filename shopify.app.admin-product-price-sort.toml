@@ -6,7 +6,7 @@ application_url = "https://ad-pri-man.vercel.app"
 embedded = true
 
 [webhooks]
-api_version = "2025-01"
+api_version = "2025-10"
 
   [[webhooks.subscriptions]]
   topics = [ "app/uninstalled" ]
