@@ -3,6 +3,8 @@
 This repository contains the production code for the Admin Price Sort app. It is a React Router–based Shopify app that manages product prices and status using the Admin GraphQL API only.
 
 Highlights
+
+- Operations Runbook: see docs/OPERATIONS.md for full deployment and troubleshooting details.
 - GraphQL-only. No REST Admin API calls remain (complies with 2024-04 REST deprecation for /products and /variants).
 - Mandatory GDPR compliance webhooks implemented with strict HMAC verification.
 - Webhooks API version set to 2025-10; server SDK pinned to ApiVersion.October25.
