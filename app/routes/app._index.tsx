@@ -1668,7 +1668,10 @@ export default function PriceSortingApp() {
                                   />
                                   <button
                                     style={{ ...styles.saveButton, fontSize: '10px', padding: '2px 6px' }}
-                                    onClick={() => savePrice(product.id, variant.id)}
+                                    onClick={() => {
+                                      console.log('✅ Save button clicked (variant):', { productId: product.id, variantId: variant.id });
+                                      savePrice(product.id, variant.id);
+                                    }}
                                     onMouseDown={(e) => e.preventDefault()}
                                   >
                                     ✓
@@ -1730,7 +1733,10 @@ export default function PriceSortingApp() {
                       />
                       <button
                         style={styles.saveButton}
-                        onClick={() => savePrice(product.id)}
+                        onClick={() => {
+                          console.log('✅ Save button clicked (main):', { productId: product.id });
+                          savePrice(product.id);
+                        }}
                         onMouseDown={(e) => e.preventDefault()} // Prevent blur
                       >
                         ✓
