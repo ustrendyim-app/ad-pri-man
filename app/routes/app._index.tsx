@@ -735,6 +735,7 @@ export default function PriceSortingApp() {
       }
 
     try {
+      console.log('🔍 Step 1: Finding product and variant...');
       const product = products.find(p => p.id === productId);
       const targetVariantId = variantId || product?.firstVariantId;
       
@@ -742,11 +743,12 @@ export default function PriceSortingApp() {
       console.log('Target variant ID:', targetVariantId);
       
       if (!product || !targetVariantId) {
-        console.error('Product or variant not found:', { product: !!product, targetVariantId });
+        console.error('❌ Product or variant not found:', { product: !!product, targetVariantId });
         shopify.toast.show('Error: Product variant not found', { isError: true });
         return;
       }
 
+      console.log('🛠️ Step 2: Updating local state...');
       // Update local state immediately for better UX
       const updatedProducts = products.map(p => {
         if (p.id !== productId) return p;
@@ -770,28 +772,35 @@ export default function PriceSortingApp() {
         };
       });
       setProducts(updatedProducts);
+      console.log('✅ Local state updated');
       
       // Make real API call
-      console.log('📡 Creating FormData:', {
+      console.log('📡 Step 3: Creating FormData:', {
         actionType: 'updatePrice',
         productId,
         variantId: targetVariantId,
         newPrice: parseFloat(tempPrice).toFixed(2)
       });
       
+      console.log('🔧 Step 4: Building FormData object...');
       const formData = new FormData();
       formData.append('actionType', 'updatePrice');
       formData.append('productId', productId);
       formData.append('variantId', targetVariantId);
       formData.append('newPrice', parseFloat(tempPrice).toFixed(2));
+      console.log('✅ FormData built');
       
-      console.log('🌐 Submitting to server via fetcher...');
+      console.log('🚀 Step 5: Checking fetcher object...', { fetcher: !!fetcher, fetcherSubmit: !!fetcher?.submit });
+      
+      console.log('🌐 Step 6: Submitting to server via fetcher...');
       fetcher.submit(formData, { method: 'POST' });
+      console.log('✅ Fetcher submit called');
       
       // Defer success toast to server response handler
       cancelEditingPrice();
+      console.log('🏁 savePrice completed successfully');
     } catch (error) {
-      console.error('Error updating price:', error);
+      console.error('❌ Error updating price:', error);
       shopify.toast.show('Error updating price. Please try again.', { isError: true });
       
       // Revert local changes on error
