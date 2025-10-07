@@ -1607,7 +1607,6 @@ export default function PriceSortingApp() {
                     </p>
                   )}
                   <p style={{ ...styles.productMeta, marginTop: '2px' }}>
-                    {console.log('Product variants info:', { title: product.title, variantCount: product.variantCount, actualVariants: product.variants?.length }) || ''}
                     {(product.variantCount > 1 || product.variants?.length > 1) && (
                       <button 
                         style={styles.expandButton}
