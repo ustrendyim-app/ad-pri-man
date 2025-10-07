@@ -407,12 +407,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const actionType = formData.get('actionType') as string;
   const productId = formData.get('productId') as string;
   
+  console.log('🛠️ SERVER ACTION received:', { actionType, productId });
+  
   try {
     if (actionType === 'updatePrice') {
       const newPrice = formData.get('newPrice') as string;
       const variantId = formData.get('variantId') as string;
       
-      console.log('Updating price:', { newPrice, variantId });
+      console.log('💰 Updating price:', { newPrice, variantId });
       
       console.log('Updating variant price with GraphQL:', { variantId, newPrice });
       
@@ -724,12 +726,13 @@ export default function PriceSortingApp() {
   };
 
   const savePrice = async (productId: string, variantId?: string) => {
-    console.log('savePrice called:', { productId, variantId, tempPrice });
-    
-    if (!tempPrice || tempPrice === '') {
-      cancelEditingPrice();
-      return;
-    }
+      console.log('🚀 savePrice called:', { productId, variantId, tempPrice });
+      
+      if (!tempPrice || tempPrice === '') {
+        console.log('❌ Empty tempPrice, cancelling');
+        cancelEditingPrice();
+        return;
+      }
 
     try {
       const product = products.find(p => p.id === productId);
@@ -769,12 +772,20 @@ export default function PriceSortingApp() {
       setProducts(updatedProducts);
       
       // Make real API call
+      console.log('📡 Creating FormData:', {
+        actionType: 'updatePrice',
+        productId,
+        variantId: targetVariantId,
+        newPrice: parseFloat(tempPrice).toFixed(2)
+      });
+      
       const formData = new FormData();
       formData.append('actionType', 'updatePrice');
       formData.append('productId', productId);
       formData.append('variantId', targetVariantId);
       formData.append('newPrice', parseFloat(tempPrice).toFixed(2));
       
+      console.log('🌐 Submitting to server via fetcher...');
       fetcher.submit(formData, { method: 'POST' });
       
       // Defer success toast to server response handler
