@@ -416,10 +416,16 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       
       console.log('Updating variant price with GraphQL:', { variantId, newPrice });
       
+      // Sanitize and validate price
+      const priceValue = Number(String(newPrice).replace(',', '.'));
+      if (!Number.isFinite(priceValue) || priceValue < 0) {
+        return { success: false, error: 'Invalid price value' };
+      }
+
       // Update variant price via GraphQL (REST /variants is deprecated)
       const gqlResp = await admin.graphql(
         `#graphql
-          mutation variantPriceUpdate($id: ID!, $price: Money!) {
+          mutation variantPriceUpdate($id: ID!, $price: Decimal!) {
             productVariantUpdate(input: { id: $id, price: $price }) {
               productVariant { id price }
               userErrors { field message }
@@ -428,12 +434,19 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         {
           variables: {
             id: variantId,
-            price: parseFloat(newPrice).toFixed(2),
+            price: Number(priceValue.toFixed(2)),
           },
         },
       );
 
       const gqlJson = await gqlResp.json();
+      if (gqlJson?.errors?.length) {
+        console.error('GraphQL errors:', gqlJson.errors);
+        return {
+          success: false,
+          error: gqlJson.errors.map((e: any) => e.message).join(', '),
+        };
+      }
       const vUpdate = gqlJson?.data?.productVariantUpdate;
       if (!vUpdate || (vUpdate.userErrors && vUpdate.userErrors.length)) {
         console.error('GraphQL variantPriceUpdate errors:', vUpdate?.userErrors);
@@ -764,9 +777,7 @@ export default function PriceSortingApp() {
       
       fetcher.submit(formData, { method: 'POST' });
       
-      // Show success message
-      shopify.toast.show(`Price updated to $${parseFloat(tempPrice).toFixed(2)}`, { duration: 3000 });
-      
+      // Defer success toast to server response handler
       cancelEditingPrice();
     } catch (error) {
       console.error('Error updating price:', error);
