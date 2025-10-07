@@ -540,6 +540,12 @@ interface Product {
 }
 
 export default function PriceSortingApp() {
+  // Clear console to stop spam from cached version
+  useEffect(() => {
+    console.clear();
+    console.log('🎯 Fresh app load - console cleared');
+  }, []);
+  
   const { 
     products: initialProducts, 
     totalFetched, 
