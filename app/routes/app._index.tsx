@@ -436,7 +436,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         {
           variables: {
             id: variantId,
-            price: Number(priceValue.toFixed(2)),
+            // Shopify GraphQL Decimal expects a string value
+            price: priceValue.toFixed(2),
           },
         },
       );
